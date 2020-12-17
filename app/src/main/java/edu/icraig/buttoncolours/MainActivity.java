@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     Button bRed, bBlue, bYellow, bGreen, fb;
     int sequenceCount = 4, n = 0;
     private Object mutex = new Object();
-    CountDownTimer ct = new CountDownTimer(6000, 1500) {
+    CountDownTimer ct = new CountDownTimer(6000,  1500) {
 
         public void onTick(long millisUntilFinished) {
             //mTextField.setText("seconds remaining: " + millisUntilFinished / 1500);
