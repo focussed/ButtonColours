@@ -2,19 +2,28 @@ package edu.icraig.buttoncolours;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private final int BLUE = 1;
+    private final int RED = 2;
+    private final int YELLOW = 3;
+    private final int GREEN = 4;
 
     Button bRed, bBlue, bYellow, bGreen, fb;
     int sequenceCount = 4, n = 0;
     private Object mutex = new Object();
+    int[] gameSequence = new int[120];
+    int arrayIndex = 0;
+
     CountDownTimer ct = new CountDownTimer(6000,  1500) {
 
         public void onTick(long millisUntilFinished) {
@@ -25,6 +34,20 @@ public class MainActivity extends AppCompatActivity {
 
         public void onFinish() {
             //mTextField.setText("done!");
+            // we now have the game sequence
+
+            for (int i = 0; i< arrayIndex; i++)
+                Log.d("game sequence", String.valueOf(gameSequence[i]));
+            // start next activity
+
+            // put the sequence into the next activity
+            // stack overglow https://stackoverflow.com/questions/3848148/sending-arrays-with-intent-putextra
+            //Intent i = new Intent(A.this, B.class);
+            //i.putExtra("numbers", array);
+            //startActivity(i);
+
+            // start the next activity
+            // int[] arrayB = extras.getIntArray("numbers");
         }
     };
 
@@ -51,15 +74,19 @@ public class MainActivity extends AppCompatActivity {
         switch (n) {
             case 1:
                 flashButton(bBlue);
+                gameSequence[arrayIndex++] = BLUE;
                 break;
             case 2:
                 flashButton(bRed);
+                gameSequence[arrayIndex++] = RED;
                 break;
             case 3:
                 flashButton(bYellow);
+                gameSequence[arrayIndex++] = YELLOW;
                 break;
             case 4:
                 flashButton(bGreen);
+                gameSequence[arrayIndex++] = GREEN;
                 break;
             default:
                 break;
