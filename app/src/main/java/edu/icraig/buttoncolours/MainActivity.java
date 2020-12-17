@@ -3,6 +3,7 @@ package edu.icraig.buttoncolours;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -14,6 +15,18 @@ public class MainActivity extends AppCompatActivity {
     Button bRed, bBlue, bYellow, bGreen, fb;
     int sequenceCount = 4, n = 0;
     private Object mutex = new Object();
+    CountDownTimer ct = new CountDownTimer(6000, 1500) {
+
+        public void onTick(long millisUntilFinished) {
+            //mTextField.setText("seconds remaining: " + millisUntilFinished / 1500);
+            oneButton();
+            //here you can have your logic to set text to edittext
+        }
+
+        public void onFinish() {
+            //mTextField.setText("done!");
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,44 +40,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void doPlay(View view) {
+        ct.start();
+    }
 
-        for (int i = 0; i < sequenceCount; i++) {
-            // Need to generate a random sequence
-            // start at 4 values, increase by 2 every time
-            n = getRandom(sequenceCount);
+    private void oneButton() {
+        n = getRandom(sequenceCount);
 
-            Toast.makeText(this, "Number = " + String.valueOf(n), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Number = " + n, Toast.LENGTH_SHORT).show();
 
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    switch (n) {
-                        case 1:
-                            flashButton(bBlue);
-                            break;
-                        case 2:
-                            flashButton(bRed);
-                            break;
-                        case 3:
-                            flashButton(bYellow);
-                            break;
-                        case 4:
-                            flashButton(bGreen);
-                            break;
-                        default:
-                            break;
-                    }   // end switch
-                }
-            }, 1000);
-        }  // end loop
+        switch (n) {
+            case 1:
+                flashButton(bBlue);
+                break;
+            case 2:
+                flashButton(bRed);
+                break;
+            case 3:
+                flashButton(bYellow);
+                break;
+            case 4:
+                flashButton(bGreen);
+                break;
+            default:
+                break;
+        }   // end switch
     }
 
     //
     // return a number between 1 and maxValue
     private int getRandom(int maxValue) {
-        int rn = (int) ((Math.random() * maxValue) + 1);
-        return (rn);
+        return ((int) ((Math.random() * maxValue) + 1));
     }
 
     private void flashButton(Button button) {
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < sequenceCount; i++) {
             int x = getRandom(sequenceCount);
 
-            Toast.makeText(this, "Number = " + String.valueOf(x), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Number = " + x, Toast.LENGTH_SHORT).show();
 
             if (x == 1)
                 flashButton(bBlue);
